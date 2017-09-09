@@ -1,0 +1,63 @@
+Laravel is the most popular PHP framework since since its inception. Vue.js is new but its gaining lots of attention from all over the world since last 1 year. You can generate some awesome apps by combining Laravel & Vue.js. 
+
+There are many Laravel+Vue.js starter kit available but none of them are complete enough to get started. Some lacks with basic functionality like authentication, some with sample CRUD module, some with responsive layout etc. I tried to create one starter kit with some basic features like authentication, registration, user profile with a sample task module which is built on latest version of bootstrap.This script can be handy enough for your new Laravel+Vue.js project & will surely speed-up your project development time. If you are working first time on Laravel+Vue.js or learning Vue.js then this is perfect script to get started. 
+
+This script is built with following:
+    * Laravel 5.4.33
+    * Vue.js 2.4.2                                                                                                    
+    * Bootstrap 4.0.0 beta
+    * jQuery 3.2.0
+    * Aixos 0.16.2
+
+Script will be updated to Laravel 5.5 by the end of this Aug 2017.
+
+Here are the composer packages used in this script:
+    * intervention/image
+    * tymon/jwt-auth
+    * webpaster/laravel-uuid
+    * laravel/socialite
+
+Here are the npm packages used in this script:
+    * laravel-mix
+    * vue-router
+    * vuex
+    * browser-sync
+    * click-confirm
+    * js-cookie
+    * laravel-vue-pagination
+    * normalize-scss
+    * vue-range-slider
+    * vuejs-datepicker
+    * vuex-persistedstate
+
+Here are the list of features this script offers to the buyers:
+    * Responsive layout, desktop/laptop/tablet/mobile compatible
+    * Laravel REST api
+    * Single Page application (SPA)
+    * JSON Authentication
+    * Social oAuth
+    * User Registration
+    * User Activation
+    * Reset Password
+    * Password Change Email
+    * Change Password
+    * User Profile
+    * User Profile Picture
+    * Dashboard
+    * Blank Page
+    * Error Page
+    * Sample Task with CRUD (Create/Read/Update/Delete)
+    * Sample Todo App
+    * Sample App Configuration
+
+Author assumes that you have basic knowledge of Laravel & Javascript to start development with this script. If you have no experience with Javascript, then you can take a look at this tutorial.
+
+For any kind of support, you can raise a ticket our support portal http://support.wmlab.in
+
+All the documentation including installation guide is available online at http://support.wmlab.in.
+
+Author: WM Lab
+Web: http://www.wmlab.in
+Email: support@wmlab.in
+Support: http://support.wmlab.in
+Skype: wmlabs
