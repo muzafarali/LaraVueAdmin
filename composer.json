@@ -11,7 +11,8 @@
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
-        "tymon/jwt-auth": "^0.5.12"
+        "tymon/jwt-auth": "^0.5.12",
+        "laravel/horizon": "^0.1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
