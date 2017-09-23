@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
@@ -10,6 +11,8 @@ use App\Notifications\Activation;
 use App\Notifications\Activated;
 use App\Notifications\PasswordReset;
 use App\Notifications\PasswordResetted;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
@@ -25,18 +28,33 @@ class AuthController extends Controller
             return response()->json(['message' => 'This is something wrong. Please try again!'], 500);
         }
 
-        $user = \App\User::whereEmail(request('email'))->first();
+        $user = User::whereEmail(request('email'))->first();
 
-        if($user->status == 'pending_activation')
+        if($user->status == 'pending_activation'){
             return response()->json(['message' => 'Your account hasn\'t been activated. Please check your email & activate account.'], 422);
+        }
 
-        if($user->status == 'banned')
+        if($user->status == 'banned'){
             return response()->json(['message' => 'Your account is banned. Please contact system administrator.'], 422);
+        }
 
-        if($user->status != 'activated')
-            return response()->json(['message' => 'There is something wrong with your account. Please contact system administrator.'], 422);
-
-        return response()->json(['message' => 'You are successfully logged in!','token' => $token]);
+        if($user->status != 'activated') {
+            return response()->json( [ 'message' => 'There is something wrong with your account. Please contact system administrator.' ], 422 );
+        }
+        
+        dd($user->getAllPermissions());
+        $permissions = array_map(function ($permission) {
+            return $permission['name'];
+        }, $user->getAllPermissions()->toArray());
+        
+        //return response()->json(['message' => 'You are successfully logged in!','token' => $token]);
+        
+        return response()->json([
+            'message' => 'You are successfully logged in!',
+            'token' => $token,
+            'user' => $user,
+            'permissions' => $permissions
+        ]);
     }
 
     public function getAuthUser(){
@@ -49,8 +67,11 @@ class AuthController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         $profile = $user->Profile;
         $social_auth = ($user->password) ? 0 : 1;
+        $permissions = array_map(function ($permission) {
+            return $permission['name'];
+        }, $user->getAllPermissions()->toArray());
 
-        return response()->json(compact('user','profile','social_auth'));
+        return response()->json(compact('user','profile','social_auth', 'permissions'));
     }
 
     public function check()
@@ -94,7 +115,7 @@ class AuthController extends Controller
         if($validation->fails())
             return response()->json(['message' => $validation->messages()->first()],422);
 
-        $user = \App\User::create([
+        $user = User::create([
             'email' => request('email'),
             'status' => 'pending_activation',
             'password' => bcrypt(request('password'))
@@ -102,7 +123,7 @@ class AuthController extends Controller
 
         $user->activation_token = generateUuid();
         $user->save();
-        $profile = new \App\Profile;
+        $profile = new \App\Models\Profile;
         $profile->first_name = request('first_name');
         $profile->last_name = request('last_name');
         $user->profile()->save($profile);
@@ -113,7 +134,7 @@ class AuthController extends Controller
     }
 
     public function activate($activation_token){
-        $user = \App\User::whereActivationToken($activation_token)->first();
+        $user = User::whereActivationToken($activation_token)->first();
 
         if(!$user)
             return response()->json(['message' => 'Invalid activation token!'],422);
@@ -140,7 +161,7 @@ class AuthController extends Controller
         if($validation->fails())
             return response()->json(['message' => $validation->messages()->first()],422);
 
-        $user = \App\User::whereEmail(request('email'))->first();
+        $user = User::whereEmail(request('email'))->first();
 
         if(!$user)
             return response()->json(['message' => 'We couldn\'t found any user with this email. Please try again!'],422);
@@ -178,7 +199,7 @@ class AuthController extends Controller
         if($validation->fails())
             return response()->json(['message' => $validation->messages()->first()],422);
 
-        $user = \App\User::whereEmail(request('email'))->first();
+        $user = User::whereEmail(request('email'))->first();
 
         if(!$user)
             return response()->json(['message' => 'We couldn\'t found any user with this email. Please try again!'],422);

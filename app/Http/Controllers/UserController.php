@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use JWTAuth;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -12,7 +13,7 @@ class UserController extends Controller
     protected $avatar_path = 'images/users/';
 
 	public function index(){
-		$users = \App\User::with('profile');
+		$users = User::with('profile');
 
 		if(request()->has('first_name'))
             $query->whereHas('profile',function($q) use ($request){
@@ -116,7 +117,7 @@ class UserController extends Controller
         if(env('IS_DEMO'))
             return response()->json(['message' => 'You are not allowed to perform this action in this mode.'],422);
 
-        $user = \App\User::find($id);
+        $user = User::find($id);
 
         if(!$user)
             return response()->json(['message' => 'Couldnot find user!'],422);
@@ -130,9 +131,9 @@ class UserController extends Controller
     }
 
     public function dashboard(){
-      $users_count = \App\User::count();
-      $tasks_count = \App\Task::count();
-      $recent_incomplete_tasks = \App\Task::whereStatus(0)->orderBy('due_date','desc')->limit(5)->get();
+      $users_count = User::count();
+      $tasks_count = \App\Models\Task::count();
+      $recent_incomplete_tasks = \App\Models\Task::whereStatus(0)->orderBy('due_date','desc')->limit(5)->get();
       return response()->json(compact('users_count','tasks_count','recent_incomplete_tasks'));
     }
 }

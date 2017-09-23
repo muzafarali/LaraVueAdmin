@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Validator;
+use App\Models\Todo;
 
 class TodoController extends Controller
 {
 
     public function index(){
         $user = JWTAuth::parseToken()->authenticate();
-        $query = \App\Todo::whereUserId($user->id);
+        $query = Todo::whereUserId($user->id);
 
         if(request()->has('show_todo_status'))
             $query->whereStatus(request('show_todo_status'));
@@ -30,7 +31,7 @@ class TodoController extends Controller
           return response()->json(['message' => $validation->messages()->first()],422);
 
         $user = \JWTAuth::parseToken()->authenticate();
-        $todo = new \App\Todo;
+        $todo = new Todo;
         $todo->fill(request()->all());
         $todo->user_id = $user->id;
         $todo->save();
@@ -39,7 +40,7 @@ class TodoController extends Controller
     }
 
     public function toggleStatus(Request $request){
-        $todo = \App\Todo::find(request('id'));
+        $todo = Todo::find(request('id'));
         $user = JWTAuth::parseToken()->authenticate();
 
         if(!$todo || $todo->user_id != $user->id)
@@ -52,7 +53,7 @@ class TodoController extends Controller
     }
 
     public function destroy(Request $request, $id){
-        $todo = \App\Todo::find($id);
+        $todo = Todo::find($id);
         $user = JWTAuth::parseToken()->authenticate();
 
         if(!$todo || $todo->user_id != $user->id)
