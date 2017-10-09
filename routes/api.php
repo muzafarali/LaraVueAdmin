@@ -26,6 +26,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['middleware' => ['jwt.auth']], function () {
+  
   Route::get('/auth/user','AuthController@getAuthUser');
   Route::post('/task','TaskController@store');
   Route::get('/task','TaskController@index');

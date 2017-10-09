@@ -126,7 +126,8 @@
                 todoForm: new Form({
                     'todo': ''
                 }),
-                show_todo_status: ''
+                show_todo_status: '',
+                active: this.$access()
             }
         },
         components : { ClickConfirm },
@@ -135,8 +136,11 @@
                 this.users_count = response.data.users_count;
                 this.tasks_count = response.data.tasks_count;
                 this.recent_incomplete_tasks = response.data.recent_incomplete_tasks;
+                this.$access(response.data.roles);
+                this.active = this.$access();
             });
             this.getTodos();
+
         },
         methods: {
             getTodos(){

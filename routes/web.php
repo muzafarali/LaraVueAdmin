@@ -13,6 +13,10 @@
 Route::get('/auth/social/{provider}', 'SocialAuthController@providerRedirect');
 Route::get('/auth/{provider}/callback', 'SocialAuthController@providerRedirectCallback');
 
+Route::get('/login', function () {
+    return view('login');
+})->where('vue', '[\/\w\.-]*')->name('login');
+
 Route::get('/{vue?}', function () {
     return view('home');
 })->where('vue', '[\/\w\.-]*')->name('home');

@@ -8,8 +8,13 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
+    
+    public function __construct() {
+        parent::__construct();
+    }
 
 	public function index(){
+  
 		$tasks = Task::whereNotNull('id');
 
 		if(request()->has('title'))

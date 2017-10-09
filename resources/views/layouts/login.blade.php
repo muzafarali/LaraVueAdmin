@@ -7,7 +7,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <meta name="description" content="">
 	    <meta name="author" content="">
-	    <title>Laravel 5.5 Vue.js Admin Kit</title>
+	    <title>Laravel Vue.js SPA Admin Starter Kit</title>
 	    <meta name="csrf-token" content="{{ csrf_token() }}" />
     	<link rel="shortcut icon" href="/images/favicon.png">
 	    <link href="/css/style.css" rel="stylesheet">
@@ -27,6 +27,5 @@
 	        <router-view></router-view>
 	    </div>
 	    <script src="/js/bundle.min.js"></script>
-
 	</body>
 </html>

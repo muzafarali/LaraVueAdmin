@@ -10,9 +10,16 @@ use App\Models\User;
 class UserController extends Controller
 {
 
+    public function __construct() {
+        dd('sss');
+        parent::__construct();
+    }
+    
+    
     protected $avatar_path = 'images/users/';
 
 	public function index(){
+	 
 		$users = User::with('profile');
 
 		if(request()->has('first_name'))
@@ -41,6 +48,7 @@ class UserController extends Controller
 		return $users->paginate(request('pageLength'));
 	}
 
+	
     public function updateProfile(Request $request){
 
         $validation = Validator::make($request->all(),[
@@ -131,9 +139,15 @@ class UserController extends Controller
     }
 
     public function dashboard(){
+      
+      $roles = \Auth::user()->roles()->get()->pluck('name')->toJson();
+      $permissions =  array_map(function ($permission) {
+            return $permission['name'];
+        }, \Auth::user()->getAllPermissions()->toArray());
+      
       $users_count = User::count();
       $tasks_count = \App\Models\Task::count();
       $recent_incomplete_tasks = \App\Models\Task::whereStatus(0)->orderBy('due_date','desc')->limit(5)->get();
-      return response()->json(compact('users_count','tasks_count','recent_incomplete_tasks'));
+      return response()->json(compact('users_count','tasks_count','recent_incomplete_tasks', 'permissions', 'roles'));
     }
 }

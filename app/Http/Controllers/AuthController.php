@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Artesaos\Defender\Defender;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use JWTAuth;
@@ -16,7 +17,8 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function authenticate(Request $request)
+    
+    public function authenticate(Request $request, Defender $defender)
     {
         $credentials = $request->only('email', 'password');
 
@@ -41,8 +43,7 @@ class AuthController extends Controller
         if($user->status != 'activated') {
             return response()->json( [ 'message' => 'There is something wrong with your account. Please contact system administrator.' ], 422 );
         }
-        
-        dd($user->getAllPermissions());
+        // when update packe use this https://laracasts.com/discuss/channels/laravel/after-upgrade-to-55-newpivot-is-broken?page=1 to fixed out model error
         $permissions = array_map(function ($permission) {
             return $permission['name'];
         }, $user->getAllPermissions()->toArray());
@@ -53,7 +54,8 @@ class AuthController extends Controller
             'message' => 'You are successfully logged in!',
             'token' => $token,
             'user' => $user,
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'roles' => $user->roles()->get()->toBase()
         ]);
     }
 

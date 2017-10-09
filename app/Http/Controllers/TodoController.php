@@ -9,7 +9,11 @@ use App\Models\Todo;
 
 class TodoController extends Controller
 {
-
+    
+    public function __construct() {
+        parent::__construct();
+    }
+    
     public function index(){
         $user = JWTAuth::parseToken()->authenticate();
         $query = Todo::whereUserId($user->id);
