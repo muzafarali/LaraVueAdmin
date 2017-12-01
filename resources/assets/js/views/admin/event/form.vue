@@ -30,7 +30,7 @@
             <span v-if="id">Update</span>
             <span v-else>Save</span>
         </button>
-        <router-link to="/task" class="btn btn-danger waves-effect waves-light m-t-10" v-show="id">Cancel</router-link>
+        <router-link to="/event" class="btn btn-danger waves-effect waves-light m-t-10" v-show="id">Cancel</router-link>
     </form>
 </template>
 
@@ -57,7 +57,7 @@
         props: ['id'],
         mounted() {
             if(this.id)
-                this.getTasks();
+                this.getEvents();
         },
         methods: {
             sliderChange(value){
@@ -67,22 +67,22 @@
                 this.eventForm.start_date = moment(this.eventForm.start_date).format('YYYY-MM-DD');
                 this.eventForm.due_date = moment(this.eventForm.due_date).format('YYYY-MM-DD');
                 if(this.id)
-                    this.updateTask();
+                    this.updateEvent();
                 else
-                    this.storeTask();
+                    this.storeEvent();
             },
-            storeTask(){
-                this.eventForm.post('/api/task')
+            storeEvent(){
+                this.eventForm.post('/api/event')
                 .then(response => {
                     toastr['success'](response.message);
-                    this.$emit('completed',response.task)
+                    this.$emit('completed',response.event)
                 })
                 .catch(response => {
                     toastr['error'](response.message);
                 });
             },
-            getTasks(){
-                axios.get('/api/task/'+this.id)
+            getEvents(){
+                axios.get('/api/event/'+this.id)
                 .then(response => {
                     this.eventForm.title = response.data.title;
                     this.eventForm.description = response.data.description;
@@ -94,13 +94,13 @@
                     toastr['error'](response.message);
                 });
             },
-            updateTask(){
-                this.eventForm.patch('/api/task/'+this.id)
+            updateEvent(){
+                this.eventForm.patch('/api/event/'+this.id)
                 .then(response => {
                     if(response.type == 'error')
                         toastr['error'](response.message);
                     else {
-                        this.$router.push('/task');
+                        this.$router.push('/admin/event');
                     }
                 })
                 .catch(response => {

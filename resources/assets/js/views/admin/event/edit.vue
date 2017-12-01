@@ -5,7 +5,7 @@
                 <h3 class="text-themecolor m-b-0 m-t-0">Edit Task</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><router-link to="/home">Home</router-link></li>
-                    <li class="breadcrumb-item"><router-link to="/task">Task</router-link></li>
+                    <li class="breadcrumb-item"><router-link to="/event">Task</router-link></li>
                     <li class="breadcrumb-item active">Edit Task</li>
                 </ol>
             </div>
@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Edit Task</h4>
-                        <task-form :id="id"></task-form>
+                        <event-form :id="id"></event-form>
                     </div>
                 </div>
             </div>
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-    import TaskForm from './form';
+    import EventForm from './form';
     import helper from '../../../services/helper'
 
     export default {
-        components : { TaskForm },
+        components : { EventForm },
         data() {
             return {
                 id:this.$route.params.id

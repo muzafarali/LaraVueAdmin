@@ -44,8 +44,8 @@
 </template>
 
 <script>
-    import helper from '../../services/helper'
-    import GuestFooter from '../../layouts/guest-footer.vue'
+    import helper from '../../../services/helper'
+    import GuestFooter from '../../../layouts/guest-footer.vue'
 
     export default {
         data() {

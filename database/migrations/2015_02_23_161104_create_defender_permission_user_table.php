@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateDefenderPermissionUserTable extends Migration
 {
@@ -11,17 +12,25 @@ class CreateDefenderPermissionUserTable extends Migration
      */
     public function up()
     {
+        
         Schema::create(config('defender.permission_user_table', 'permission_user'), function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on(config('auth.table', 'users'))->onDelete('cascade');
+            
 
             $table->integer(config('defender.permission_key', 'permission_id'))->unsigned()->index();
-            $table->foreign(config('defender.permission_key', 'permission_id'))->references('id')
-                  ->on(config('defender.permission_table', 'permissions'))
-                  ->onDelete('cascade');
+            
 
             $table->tinyInteger('value')->default(-1);
             $table->timestamp('expires')->nullable();
+        });
+    
+        Schema::table(config('defender.permission_user_table', 'permission_user'), function($table) {
+    
+            $table->foreign('user_id')->references('id')->on(config('auth.table', 'users'))->onDelete('cascade');
+            $table->foreign(config('defender.permission_key', 'permission_id'))->references('id')
+                ->on(config('defender.permission_table', 'permissions'))
+                ->onDelete('cascade');
         });
     }
 

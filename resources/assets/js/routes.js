@@ -11,44 +11,54 @@ let routes = [
         children: [
             {
                 path: '/admin',
-                component: require('./views/pages/home'),
+                component: require('./views/admin/pages/home'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
             {
                 path: '/admin/home',
-                component: require('./views/pages/home'),
+                component: require('./views/admin/pages/home'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
             {
                 path: '/admin/blank',
-                component: require('./views/pages/blank'),
+                component: require('./views/admin/pages/blank'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
             {
                 path: '/admin/configuration',
-                component: require('./views/configuration/configuration'),
+                component: require('./views/admin/configuration/configuration'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
             {
                 path: '/admin/profile',
-                component: require('./views/user/profile'),
+                component: require('./views/admin/user/profile'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
             {
                 path: '/admin/task',
-                component: require('./views/task/index'),
+                component: require('./views/admin/task/index'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
             {
                 path: '/admin/task/:id/edit',
-                component: require('./views/task/edit'),
+                component: require('./views/admin/task/edit'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
             {
-                path: '/admin/user',
-                component: require('./views/user/index'),
-                meta: {  permission: 'admin|any', fail: '/error' }
+                path: '/admin/event',
+                component: require('./views/admin/event/index'),
+                meta: {  permission: 'any', fail: '/error' }
             },
+            {
+                path: '/admin/event/:id/edit',
+                component: require('./views/admin/event/edit'),
+                meta: {  permission: 'any', fail: '/error' }
+            },
+            {
+                path: '/admin/user',
+                component: require('./views/admin/user/index'),
+                meta: {  permission: 'admin|any', fail: '/error' }
+            }
         ]
     },
     {
@@ -91,6 +101,16 @@ let routes = [
                 component: require('./views/task/edit'),
                 meta: {  permission: 'admin|any', fail: '/error' }
             },
+          {
+            path: '/admin/event',
+            component: require('./views/admin/event/index'),
+            meta: {  permission: 'any', fail: '/error' }
+          },
+          {
+            path: '/admin/event/:id/edit',
+            component: require('./views/admin/event/edit'),
+            meta: {  permission: 'any', fail: '/error' }
+          },
             {
                 path: '/user',
                 component: require('./views/user/index'),

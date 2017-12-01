@@ -3,6 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateDefenderPermissionsTable extends Migration
 {
@@ -12,6 +13,7 @@ class CreateDefenderPermissionsTable extends Migration
     public function up()
     {
         Schema::create(config('defender.permission_table', 'permissions'), function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('readable_name');

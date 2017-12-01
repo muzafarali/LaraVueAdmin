@@ -126,7 +126,7 @@
 
 <script>
     import pagination from 'laravel-vue-pagination'
-    import helper from '../../services/helper'
+    import helper from '../../../services/helper'
     import ClickConfirm from 'click-confirm'
 
     export default {

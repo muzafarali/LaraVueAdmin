@@ -23,6 +23,9 @@
                         <router-link to="/admin/user" exact><i class="fa fa-users"></i> <span class="hide-menu">User</span></router-link>
                     </li>
                     <li>
+                        <router-link to="/admin/event" exact><i class="fa fa-tasks"></i> <span class="hide-menu">Event</span></router-link>
+                    </li>
+                    <li>
                         <router-link to="/admin/task" exact><i class="fa fa-tasks"></i> <span class="hide-menu">Task</span></router-link>
                     </li>
                     <li>

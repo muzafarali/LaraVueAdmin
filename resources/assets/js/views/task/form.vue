@@ -4,25 +4,25 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Title</label>
-                    <input class="form-control" type="text" value="" v-model="taskForm.title">
+                    <input class="form-control" type="text" value="" v-model="eventForm.title">
                 </div>
                 <div class="form-group" v-if="id">
-                    <label for="">Progress ({{taskForm.progress}}%)</label><br />
-                    <range-slider class="slider" min="0" max="100" step="1" v-model="taskForm.progress" @change="sliderChange"></range-slider>
+                    <label for="">Progress ({{eventForm.progress}}%)</label><br />
+                    <range-slider class="slider" min="0" max="100" step="1" v-model="eventForm.progress" @change="sliderChange"></range-slider>
                 </div>
                 <div class="form-group">
                     <label for="">Start Date</label>
-                    <datepicker v-model="taskForm.start_date" :bootstrapStyling="true"></datepicker>
+                    <datepicker v-model="eventForm.start_date" :bootstrapStyling="true"></datepicker>
                 </div>
                 <div class="form-group">
                     <label for="">Due Date</label>
-                    <datepicker v-model="taskForm.due_date" :bootstrapStyling="true"></datepicker>
+                    <datepicker v-model="eventForm.due_date" :bootstrapStyling="true"></datepicker>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Description</label>
-                    <textarea class="form-control" type="text" value="" v-model="taskForm.description" rows="10"></textarea>
+                    <textarea class="form-control" type="text" value="" v-model="eventForm.description" rows="10"></textarea>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
     export default {
         data() {
             return {
-                taskForm: new Form({
+                eventForm: new Form({
                     'title' : '',
                     'description' : '',
                     'start_date' : '',
@@ -61,18 +61,18 @@
         },
         methods: {
             sliderChange(value){
-                this.taskForm.progress = value;
+                this.eventForm.progress = value;
             },
             proceed(){
-                this.taskForm.start_date = moment(this.taskForm.start_date).format('YYYY-MM-DD');
-                this.taskForm.due_date = moment(this.taskForm.due_date).format('YYYY-MM-DD');
+                this.eventForm.start_date = moment(this.eventForm.start_date).format('YYYY-MM-DD');
+                this.eventForm.due_date = moment(this.eventForm.due_date).format('YYYY-MM-DD');
                 if(this.id)
                     this.updateTask();
                 else
                     this.storeTask();
             },
             storeTask(){
-                this.taskForm.post('/api/task')
+                this.eventForm.post('/api/task')
                 .then(response => {
                     toastr['success'](response.message);
                     this.$emit('completed',response.task)
@@ -84,18 +84,18 @@
             getTasks(){
                 axios.get('/api/task/'+this.id)
                 .then(response => {
-                    this.taskForm.title = response.data.title;
-                    this.taskForm.description = response.data.description;
-                    this.taskForm.start_date = response.data.start_date;
-                    this.taskForm.due_date = response.data.due_date;
-                    this.taskForm.progress = response.data.progress;
+                    this.eventForm.title = response.data.title;
+                    this.eventForm.description = response.data.description;
+                    this.eventForm.start_date = response.data.start_date;
+                    this.eventForm.due_date = response.data.due_date;
+                    this.eventForm.progress = response.data.progress;
                 })
                 .catch(response => {
                     toastr['error'](response.message);
                 });
             },
             updateTask(){
-                this.taskForm.patch('/api/task/'+this.id)
+                this.eventForm.patch('/api/task/'+this.id)
                 .then(response => {
                     if(response.type == 'error')
                         toastr['error'](response.message);
