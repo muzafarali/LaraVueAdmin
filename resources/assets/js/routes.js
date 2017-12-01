@@ -50,6 +50,11 @@ let routes = [
                 meta: {  permission: 'any', fail: '/error' }
             },
             {
+                path: '/admin/event/add',
+                component: require('./views/admin/event/add'),
+                meta: {  permission: 'any', fail: '/error' }
+            },
+            {
                 path: '/admin/event/:id/edit',
                 component: require('./views/admin/event/edit'),
                 meta: {  permission: 'any', fail: '/error' }

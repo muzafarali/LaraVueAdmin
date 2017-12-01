@@ -24,6 +24,11 @@
                     </li>
                     <li>
                         <router-link to="/admin/event" exact><i class="fa fa-tasks"></i> <span class="hide-menu">Event</span></router-link>
+                        <ul>
+                            <li>
+                                <router-link to="/admin/event/add" exact><i class="fa fa-tasks"></i> <span class="hide-menu">Add Event</span></router-link>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <router-link to="/admin/task" exact><i class="fa fa-tasks"></i> <span class="hide-menu">Task</span></router-link>
